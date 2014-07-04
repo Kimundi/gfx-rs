@@ -73,13 +73,14 @@ pub struct Renderer {
 impl Renderer {
     pub fn new(device_tx: Sender<device::Request>, device_rx: Receiver<device::Reply>,
             swap_rx: Receiver<device::Ack>) -> Future<Renderer> {
-        device_tx.send(device::CallNewArrayBuffer);
+//      device_tx.send(device::CallNewArrayBuffer);
         device_tx.send(device::CallNewFrameBuffer);
         Future::from_fn(proc() {
-            let array_buffer = match device_rx.recv() {
-                device::ReplyNewArrayBuffer(array_buffer) => array_buffer,
-                _ => fail!("invalid device reply for CallNewArrayBuffer"),
-            };
+//          let array_buffer = match device_rx.recv() {
+//              device::ReplyNewArrayBuffer(array_buffer) => array_buffer,
+//              _ => fail!("invalid device reply for CallNewArrayBuffer"),
+//          };
+            let array_buffer = 0;
             let frame_buffer = match device_rx.recv() {
                 device::ReplyNewFrameBuffer(frame_buffer) => frame_buffer,
                 _ => fail!("invalid device reply for CallNewFrameBuffer"),
@@ -122,7 +123,7 @@ impl Renderer {
             },
         }
         // bind vertex attributes
-        self.device_tx.send(device::CastBindArrayBuffer(self.common_array_buffer));
+//      self.device_tx.send(device::CastBindArrayBuffer(self.common_array_buffer));
         let mesh = self.cache.meshes.get(mesh_handle);
         self.bind_mesh(mesh, program).unwrap();
         // draw

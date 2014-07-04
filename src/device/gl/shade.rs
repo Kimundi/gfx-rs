@@ -208,19 +208,20 @@ fn query_attributes(prog: super::Program) -> Vec<s::Attribute> {
 }
 
 fn query_blocks(prog: super::Program) -> Vec<s::BlockVar> {
-    let num = get_program_iv(prog, gl::ACTIVE_UNIFORM_BLOCKS);
+//     let num = get_program_iv(prog, gl::ACTIVE_UNIFORM_BLOCKS);
+    let num = 0u32;
     range(0, num as gl::types::GLuint).map(|i| {
         let mut size = 0;
-        let mut tmp = 0;
+//         let mut tmp = 0;
         let mut usage = 0;
-        unsafe {
-            gl::GetActiveUniformBlockiv(prog, i, gl::UNIFORM_BLOCK_NAME_LENGTH, &mut size);
-            for (stage, &eval) in [gl::UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER,
-                    gl::UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER].iter().enumerate() {
-                gl::GetActiveUniformBlockiv(prog, i, eval, &mut tmp);
-                if tmp != 0 {usage |= 1<<stage;}
-            }
-        }
+//         unsafe {
+//             gl::GetActiveUniformBlockiv(prog, i, gl::UNIFORM_BLOCK_NAME_LENGTH, &mut size);
+//             for (stage, &eval) in [gl::UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER,
+//                     gl::UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER].iter().enumerate() {
+//                 gl::GetActiveUniformBlockiv(prog, i, eval, &mut tmp);
+//                 if tmp != 0 {usage |= 1<<stage;}
+//             }
+//         }
         let mut name = String::with_capacity(size as uint); //includes terminating null
         name.grow(size as uint, '\0');
         let mut actual_name_size = 0;
